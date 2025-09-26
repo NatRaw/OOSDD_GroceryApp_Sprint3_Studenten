@@ -16,6 +16,9 @@ namespace Grocery.App.ViewModels
         private readonly IProductService _productService;
         private readonly IFileSaverService _fileSaverService;
         
+        //Keep all products here to filter them when searching
+        private List<Product> _availableProducts = new();
+        
         public ObservableCollection<GroceryListItem> MyGroceryListItems { get; set; } = [];
         public ObservableCollection<Product> AvailableProducts { get; set; } = [];
 
@@ -42,14 +45,38 @@ namespace Grocery.App.ViewModels
         private void GetAvailableProducts()
         {
             AvailableProducts.Clear();
+            _availableProducts.Clear();
             foreach (Product p in _productService.GetAll())
-                if (MyGroceryListItems.FirstOrDefault(g => g.ProductId == p.Id) == null  && p.Stock > 0)
+            {
+                if (MyGroceryListItems.FirstOrDefault(g => g.ProductId == p.Id) == null && p.Stock > 0)
+                {
                     AvailableProducts.Add(p);
+                    _availableProducts.Add(p); //add to list for search function
+                }
+            }
         }
 
         partial void OnGroceryListChanged(GroceryList value)
         {
             Load(value.Id);
+        }
+        
+        [RelayCommand]
+        public void SearchProducts(string searchTerm)
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                //Reset to complete list
+                AvailableProducts = new ObservableCollection<Product>(_availableProducts);
+                OnPropertyChanged(nameof(AvailableProducts));
+                return;
+            }
+            
+            var filtered =  _availableProducts
+                .Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            AvailableProducts = new ObservableCollection<Product>(filtered);
+            OnPropertyChanged(nameof(AvailableProducts));
         }
 
         [RelayCommand]
