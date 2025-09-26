@@ -9,5 +9,8 @@ namespace Grocery.Core.Interfaces.Services
         public Client? Get(int id);
 
         public List<Client> GetAll();
+        
+        //add client
+        void Add(Client client);
     }
 }

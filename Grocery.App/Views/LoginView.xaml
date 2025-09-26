@@ -11,5 +11,9 @@
         <Entry Placeholder="Password" Text="{Binding Password}" IsPassword="True" />
         <Button Text="Login" Command="{Binding LoginCommand}" />
         <Label Text="{Binding LoginMessage}" TextColor="Red" />
+        <!--uc9 button to login page for register-->
+        <Button Text="Don't have an account? Register"
+                Command="{Binding NavigateToRegisterCommand}" />
+
     </StackLayout>
 </ContentPage>
