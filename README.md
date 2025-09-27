@@ -10,8 +10,15 @@ Aanvullen:
 - Zorg dat de SearchCommand wordt gebonden aan een functie in het onderliggende ViewModel (GroceryListItemsViewModel) en dat de zoekterm die in het zoekveld is ingetypt gebruikt wordt als parameter (SearchCommandParameter).  
 - Werk in het viewModel (GroceryListItemsViewModel) de zoekfunctie uit en zorg dat de beschikbare producten worden gefilterd op de zoekterm!  
 
-## UCx Registratie gebruiker 
-Of een ander idee zelf uitwerken. Dit betekent ook dat de documentatie hiervoor ontwikkeld moet worden.
-
-  
-
+## UC09 Registratie gebruiker 
+Aanvullen:
+- Voeg UserRegistrationView.xaml en UserRegistrationView.xaml.cs toe in Views.
+- Voeg UserRegistrationViewModel.cs toe in ViewModels en bind invoervelden Voornaam, e-mail, Wachtwoord.
+- Voeg in LoginView.xaml een Registreren-knop toe die naar UserRegistrationView navigeert.
+- Registreer de route in AppShell.xaml.cs (bijvoobeeld. Routing.RegisterRoute(Register, typeof(UserRegistrationView));).
+- Registreer View + ViewModel (en benodigde services) in MauiProgram.cs.
+- Implementeer in UserRegistrationViewModel een RegisterCommand die valideert verplichte velden, wachtwoorden, e-maill.
+- Laat RegisterCommand via AuthService/ClientService de nieuwe gebruiker aanmaken en opslaan via IClientRepository.
+- Toon feedback succes als registratie is gelukt.
+- Breid waar nodig de interfaces uit IClientService, IClientRepository, IAuthService met registratiemethodes.
+- Zorg dat App.xaml.cs/AppShell de login/registratie-flow activeert (Login als start; registratie-route beschikbaar).
